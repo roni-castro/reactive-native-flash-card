@@ -1,0 +1,2 @@
+export const GET_FLASH_CARDS = 'GET_FLASH_CARDS'
+export const ADD_FLASH_CARD = 'ADD_FLASH_CARD'
