@@ -3,7 +3,7 @@ import NewDeck from './NewDeck'
 import Decks from './Decks'
 import { Platform } from 'react-native'
 import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons'
-import { red, white } from '../utils/colors'
+import { black, white } from '../utils/colors'
 import { 
     createBottomTabNavigator,
     createMaterialTopTabNavigator, 
@@ -30,9 +30,9 @@ const RouteConfigs = {
 
 const TabNavigatorConfig = {
     tabBarOptions: {
-        activeTintColor: Platform.OS === 'ios' ? red : white,
+        activeTintColor: Platform.OS === 'ios' ? black : white,
         style: {
-            backgroundColor: Platform.OS === 'ios' ? white : red,
+            backgroundColor: Platform.OS === 'ios' ? white : black,
             height: 56,
             shadowColor: 'rgba(0, 0, 0, 0.24)',
             shadowOffset: {

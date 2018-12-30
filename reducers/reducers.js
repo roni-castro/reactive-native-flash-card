@@ -1,46 +1,24 @@
 
-// const initialState = {
-//         React: {
-//           title: 'React',
-//           questions: [
-//             {
-//               question: 'What is React?',
-//               answer: 'A library for managing user interfaces'
-//             },
-//             {
-//               question: 'Where do you make Ajax requests in React?',
-//               answer: 'The componentDidMount lifecycle event'
-//             }
-//           ]
-//         },
-//         JavaScript: {
-//           title: 'JavaScript',
-//           questions: [
-//             {
-//               question: 'What is a closure?',
-//               answer: 'The combination of a function and the lexical environment within which that function was declared.'
-//             }
-//           ]
-//         }
-//       }
-//   };
+const initialState = {
+    cards: []
+};
 
 import {
     ADD_FLASH_CARD,
     GET_FLASH_CARDS
 } from '../actions/index'
 
-function flashCards(state= {}, action) {
+function flashCards(state = initialState, action) {
     switch(action.type) {
         case GET_FLASH_CARDS:
             return {
                 ...state,
-                ...action.cards
+                cards: cards.push(action.cards)
             }
         case ADD_FLASH_CARD: 
             return {
                 ...state,
-                ...action.card
+                cards: cards.push(action.card)
             }
         default:
             return state
