@@ -1,28 +1,41 @@
 
 const initialState = {
-    cards: []
+    decks: [],
+    error: null
 };
 
 import {
-    ADD_FLASH_CARD,
-    GET_FLASH_CARDS
+    ADD_NEW_DECK_SUCCESS,
+    ADD_NEW_DECK_FAILURE,
+    GET_FLASH_CARDS_SUCCESS,
+    GET_FLASH_CARDS_FAILURE
 } from '../actions/index'
 
-function flashCards(state = initialState, action) {
+function decks(state = initialState, action) {
     switch(action.type) {
-        case GET_FLASH_CARDS:
+        case GET_FLASH_CARDS_SUCCESS:
             return {
                 ...state,
-                cards: cards.push(action.cards)
+                decks: action.decks
             }
-        case ADD_FLASH_CARD: 
+        case GET_FLASH_CARDS_FAILURE:
             return {
                 ...state,
-                cards: cards.push(action.card)
+                error: action.error
+            }
+        case ADD_NEW_DECK_SUCCESS: 
+            return {
+                ...state,
+                decks: [...state.decks, action.deck],
+            }
+        case ADD_NEW_DECK_FAILURE:
+            return {
+                ...state,
+                error: action.error
             }
         default:
             return state
     }
 }
 
-export default flashCards
+export default decks

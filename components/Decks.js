@@ -1,10 +1,15 @@
 import React from 'react'
 import { FlatList, View, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux'
-import Card from './Card'
-import { gray, lightGray } from '../utils/colors';
+import Deck from './Deck'
+import { getDecks } from '../actions/decks'
+import { lightGray } from '../utils/colors';
 
 class Decks extends React.Component {
+
+    componentDidMount() {
+        this.props.getDecks()
+    }
 
     renderItem = ({item}) => {
         return (
@@ -13,17 +18,17 @@ class Decks extends React.Component {
                     'DeckDetail', 
                     { card: item }
                 )}>
-                <Card card={item} />
+                <Deck deck={item} />
             </TouchableOpacity>
         )
     }
 
     render() {
-        const { cards } = this.props
+        const { decks } = this.props
         return (
             <View style={{flex: 1, backgroundColor: lightGray}}>
-                {cards && <FlatList 
-                    data={cards}
+                {decks && <FlatList 
+                    data={decks}
                     renderItem={this.renderItem}
                     keyExtractor={(item, index) => index.toString()}
                 />}
@@ -32,10 +37,16 @@ class Decks extends React.Component {
     }
 }
 
-function mapStateToProps({cards}) {
+function mapStateToProps({decks}) {
     return {
-        cards: cards
+        decks: decks
     }
 }
 
-export default connect(mapStateToProps)(Decks)
+function mapDispatchToProps(dispatch) {
+    return {
+        getDecks: () => dispatch(getDecks())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Decks)

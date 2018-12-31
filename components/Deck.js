@@ -2,11 +2,14 @@ import React from 'react'
 import { View, Text, StyleSheet, Platform } from 'react-native';
 import { red, white } from '../utils/colors'
 
-export default function Card({card}) {
+export default function Deck({deck}) {
+    if(!deck) {
+        return null
+    }
     return(
         <View style={styles.item}>
-            <Text style={styles.title}>{card.title}</Text> 
-            <Text style={styles.counter}>{card.questions.length} cards</Text>
+            <Text style={styles.title}>{deck.title}</Text> 
+            {deck.questions && <Text style={styles.counter}>{deck.questions.length} cards</Text>}
         </View>
     )
 }
