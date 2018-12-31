@@ -1,50 +1,41 @@
 
-// const initialState = {
-//         React: {
-//           title: 'React',
-//           questions: [
-//             {
-//               question: 'What is React?',
-//               answer: 'A library for managing user interfaces'
-//             },
-//             {
-//               question: 'Where do you make Ajax requests in React?',
-//               answer: 'The componentDidMount lifecycle event'
-//             }
-//           ]
-//         },
-//         JavaScript: {
-//           title: 'JavaScript',
-//           questions: [
-//             {
-//               question: 'What is a closure?',
-//               answer: 'The combination of a function and the lexical environment within which that function was declared.'
-//             }
-//           ]
-//         }
-//       }
-//   };
+const initialState = {
+    decks: [],
+    error: null
+};
 
 import {
-    ADD_FLASH_CARD,
-    GET_FLASH_CARDS
+    ADD_NEW_DECK_SUCCESS,
+    ADD_NEW_DECK_FAILURE,
+    GET_FLASH_CARDS_SUCCESS,
+    GET_FLASH_CARDS_FAILURE
 } from '../actions/index'
 
-function flashCards(state= {}, action) {
+function decks(state = initialState, action) {
     switch(action.type) {
-        case GET_FLASH_CARDS:
+        case GET_FLASH_CARDS_SUCCESS:
             return {
                 ...state,
-                ...action.cards
+                decks: action.decks
             }
-        case ADD_FLASH_CARD: 
+        case GET_FLASH_CARDS_FAILURE:
             return {
                 ...state,
-                ...action.card
+                error: action.error
+            }
+        case ADD_NEW_DECK_SUCCESS: 
+            return {
+                ...state,
+                decks: [...state.decks, action.deck],
+            }
+        case ADD_NEW_DECK_FAILURE:
+            return {
+                ...state,
+                error: action.error
             }
         default:
             return state
     }
 }
 
-export default flashCards
+export default decks
