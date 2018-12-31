@@ -5,12 +5,19 @@ import {
     GET_FLASH_CARDS_SUCCESS,
     GET_FLASH_CARDS_FAILURE
 } from '../actions/index'
+import { v4 as uuid } from 'uuid';
 
 import { createNewDeckAPI, fetchDecksAPI } from '../utils/api';
 
 export function createNewDeck(deck) {
+    const newDeck = {
+        ...deck,
+        id: uuid(),
+        questions: []
+    }
+
     return (dispatch) => {
-        createNewDeckAPI(deck)
+        createNewDeckAPI(newDeck)
         .then((deck) => dispatch(onCreateNewDeckSuccess(deck)))
         .catch((err) => dispatch(onCreateNewDeckError(err)))
     }
