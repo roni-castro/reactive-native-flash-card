@@ -16,7 +16,7 @@ class Decks extends React.Component {
             <TouchableOpacity 
                 onPress={() => this.props.navigation.navigate(
                     'DeckDetail', 
-                    { card: item }
+                    { deck: item }
                 )}>
                 <Deck deck={item} />
             </TouchableOpacity>
@@ -37,9 +37,9 @@ class Decks extends React.Component {
     }
 }
 
-function mapStateToProps({decks}) {
+function mapStateToProps({decksReducer}) {
     return {
-        decks: decks
+        decks: decksReducer.decks
     }
 }
 

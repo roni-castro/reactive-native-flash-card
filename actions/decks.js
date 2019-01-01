@@ -3,11 +3,20 @@ import {
     ADD_NEW_DECK_SUCCESS,
     ADD_NEW_DECK_FAILURE,
     GET_FLASH_CARDS_SUCCESS,
-    GET_FLASH_CARDS_FAILURE
+    GET_FLASH_CARDS_FAILURE,
+    GET_SPECIFIC_DECK_SUCCESS,
+    GET_SPECIFIC_DECK_FAILURE,
+    ADD_CARD_SUCCESS,
+    ADD_CARD_FAILURE,
 } from '../actions/index'
 import { v4 as uuid } from 'uuid';
 
-import { createNewDeckAPI, fetchDecksAPI } from '../utils/api';
+import { 
+    createNewDeckAPI, 
+    fetchDecksAPI, 
+    fetchDeckByIdAPI,
+    addCardToDeckAPI
+} from '../utils/api';
 
 export function createNewDeck(deck) {
     const newDeck = {
@@ -48,5 +57,42 @@ const onFetchDecksSuccess = (decks) => ({
 
 const onFetchDecksError = (error) => ({
     type: GET_FLASH_CARDS_FAILURE,
+    error
+})
+
+
+export function getDeckById(deckId) {
+    return (dispatch) => {
+        fetchDeckByIdAPI(deckId)
+        .then(deck => dispatch(onFetchDeckSuccess(deck)))
+        .catch(err => dispatch(onFetchDeckError(err)))
+    }
+}
+
+const onFetchDeckSuccess = (deck) => ({
+    type: GET_SPECIFIC_DECK_SUCCESS,
+    deck
+})
+
+const onFetchDeckError = (error) => ({
+    type: GET_SPECIFIC_DECK_FAILURE,
+    error
+})
+
+export function addCardToDeck(card, deckId) {
+    return (dispatch) => {
+        addCardToDeckAPI(card, deckId)
+        .then((deck) => dispatch(onAddCardDeckSuccess(deck)))
+        .catch((err) => dispatch(onAddCardDeckError(err)))
+    }
+}
+
+const onAddCardDeckSuccess = (deck) => ({
+    type: ADD_CARD_SUCCESS,
+    deck
+})
+
+const onAddCardDeckError = (error) => ({
+    type: ADD_CARD_FAILURE,
     error
 })

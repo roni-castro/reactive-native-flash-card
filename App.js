@@ -7,7 +7,7 @@ import { black } from './utils/colors'
 import { createStore } from 'redux'
 import { applyMiddleware }  from 'redux';
 import thunk from 'redux-thunk';
-import reducers from './reducers/reducers'
+import reducers from './reducers/index'
 
 export default class App extends React.Component {
   render() {
