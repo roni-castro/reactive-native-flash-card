@@ -7,7 +7,7 @@ export async function createNewDeckAPI(newDeck) {
     currentDecks = (currentDecks === null) ? [] : JSON.parse(currentDecks)
     currentDecks.push(newDeck)
     await AsyncStorage.setItem(FLASH_DECK, JSON.stringify(currentDecks))
-    return Promise.resolve(newDeck)
+    return newDeck
 }
 
 export async function fetchDecksAPI() {
@@ -20,4 +20,17 @@ export async function fetchDeckByIdAPI(deckId) {
     const decks = await fetchDecksAPI()
     const filteredDeck = decks.filter((element) => element.id === deckId)
     return (filteredDeck.length) > 0 ? filteredDeck[0] : null
+}
+
+export async function addCardToDeckAPI(card, deckId) {
+    let decks = await fetchDecksAPI()
+    const updatedDeck = decks.map(deck => {
+        if(deck && deck.id === deckId) {
+            deck.questions.push(card)
+            return deck
+        }
+        return deck
+    })
+    await AsyncStorage.setItem(FLASH_DECK, JSON.stringify(updatedDeck))
+    return fetchDeckByIdAPI(deckId)
 }

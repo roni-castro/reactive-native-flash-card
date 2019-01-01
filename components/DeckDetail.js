@@ -23,7 +23,11 @@ class DeckDetail extends React.Component {
     }
 
     addNewCardToDeck = () => {
-
+        const { deckId, navigation } = this.props
+        navigation.navigate(
+            'AddCard', 
+            { deckId }
+        )
     }
 
     render() {
