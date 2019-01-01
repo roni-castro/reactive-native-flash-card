@@ -15,3 +15,9 @@ export async function fetchDecksAPI() {
     const decks = JSON.parse(decksStr)
     return decks
 }
+
+export async function fetchDeckByIdAPI(deckId) {
+    const decks = await fetchDecksAPI()
+    const filteredDeck = decks.filter((element) => element.id === deckId)
+    return (filteredDeck.length) > 0 ? filteredDeck[0] : null
+}

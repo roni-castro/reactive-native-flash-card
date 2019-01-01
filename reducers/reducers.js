@@ -8,10 +8,12 @@ import {
     ADD_NEW_DECK_SUCCESS,
     ADD_NEW_DECK_FAILURE,
     GET_FLASH_CARDS_SUCCESS,
-    GET_FLASH_CARDS_FAILURE
+    GET_FLASH_CARDS_FAILURE,
+    GET_SPECIFIC_DECK_SUCCESS,
+    GET_SPECIFIC_DECK_FAILURE,
 } from '../actions/index'
 
-function decks(state = initialState, action) {
+export function decksReducer(state = initialState, action) {
     switch(action.type) {
         case GET_FLASH_CARDS_SUCCESS:
             return {
@@ -38,4 +40,24 @@ function decks(state = initialState, action) {
     }
 }
 
-export default decks
+const initialDeckState = {
+    deck: {},
+    error: null
+}
+
+export function specificDeckReducer(state = initialDeckState, action) {
+    switch(action.type) {
+        case GET_SPECIFIC_DECK_SUCCESS:
+            return {
+                ...state,
+                deck: action.deck
+            }
+        case GET_SPECIFIC_DECK_FAILURE:
+            return {
+                ...state,
+                error: action.error
+            }
+        default:
+            return state
+    }
+}
