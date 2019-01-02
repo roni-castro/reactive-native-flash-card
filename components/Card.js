@@ -22,8 +22,10 @@ export default function Card({card, showQuestion, onPress}) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        margin: 16,
+        justifyContent: 'space-around',
+        padding: 40,
         backgroundColor: white,
+        borderWidth: 1,
         borderRadius: Platform.OS === 'ios' ? 16 : 4,
         shadowRadius: 3,
         shadowOpacity: 0.8,

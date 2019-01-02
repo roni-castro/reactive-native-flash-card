@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import RoundedButton from './RoundedButton'
 import Card from './Card'
 import { green, red } from '../utils/colors'
+import FinalScore from './FinalScore';
 
 class Quiz extends React.Component {
 
@@ -46,21 +47,16 @@ class Quiz extends React.Component {
         }
     }
 
-    calculatePercentageScore = () => {
-        const { questions } = this.props
-        const { numberOfCorrectAnswer: numberOfCorrectAnswer } = this.state
-        return Number((numberOfCorrectAnswer/questions.length) * 100).toFixed(2)
-    }
-
     render() {
         const { questions } = this.props
-        const { currentQuestionIndex, finishedGame, isShowingQuestion } = this.state
+        const { currentQuestionIndex, finishedGame, isShowingQuestion, numberOfCorrectAnswer } = this.state
 
         if (finishedGame) {
             return (
-                <View>
-                    <Text style={styles.finalScore}>Percentage of correct cards: {this.calculatePercentageScore()}%</Text>
-                </View>
+                <FinalScore 
+                    numberOfCorrectAnswer={numberOfCorrectAnswer}
+                    numberOfCards={questions.length} 
+                />
             )
         }
         return (
@@ -95,18 +91,16 @@ const styles = StyleSheet.create({
         flex: 1,
         margin: 16
     },
-    finalScore: {
-
-    },
     cardsCounter: {
-
+        fontSize: 16,
+        marginBottom: 16
     },
     questionStyle: {
         textAlign: 'center',
         fontSize: 24
     },
     answerStyle: {
-
+        marginTop: 16
     },
     buttonContainer: {
         flex: 1,
@@ -117,9 +111,6 @@ const styles = StyleSheet.create({
     button: {
         margin: 8,
     },
-    center: {
-        alignSelf: 'center'
-    }
 })
 
 function mapStateTopProps(_, { navigation }) {
