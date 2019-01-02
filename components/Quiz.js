@@ -1,10 +1,11 @@
 import React from 'react'
-import { View, Text, StyleSheet, Platform } from 'react-native'
+import { View, Text, StyleSheet, Platform, Dimensions } from 'react-native'
 import { connect } from 'react-redux'
 import RoundedButton from './RoundedButton'
 import Card from './Card'
-import { green, red } from '../utils/colors'
+import { green, red, orange, white, blue } from '../utils/colors'
 import FinalScore from './FinalScore';
+import CardFlip from 'react-native-card-flip';
 
 class Quiz extends React.Component {
 
@@ -13,12 +14,14 @@ class Quiz extends React.Component {
         numberOfCorrectAnswer: 0,
         finishedGame: false,
         isShowingQuestion: true,
+        card: null,
     }
 
     toogleQuestionAnswer = () => {
         this.setState({
             isShowingQuestion: !this.state.isShowingQuestion
         })
+        this.card.flip()
     }
 
     OnCorrectButtonClick = () => {
@@ -26,10 +29,12 @@ class Quiz extends React.Component {
             numberOfCorrectAnswer: this.state.numberOfCorrectAnswer + 1
         }, 
         this.checkNextCardOrEndGame())
+        this.card.flip()
     }
 
     OnIncorrectButtonClick = () => {
         this.checkNextCardOrEndGame()
+        this.card.flip()
     }
 
     checkNextCardOrEndGame = () => {
@@ -62,12 +67,23 @@ class Quiz extends React.Component {
         return (
             <View style={styles.container}>
                 <Text style={styles.cardsCounter}>{currentQuestionIndex + 1}/{questions.length}</Text>
-                <Card 
-                    card={questions[currentQuestionIndex]} 
-                    showQuestion={isShowingQuestion}
-                    onPress={this.toogleQuestionAnswer}
-                />
-                <View style={styles.buttonContainer}>
+                <CardFlip style={[styles.cardContainer]} ref={(card) => this.card = card}>
+                    <Card 
+                        text={questions[currentQuestionIndex].question} 
+                        backgroundColor={orange}
+                        buttonTextColor={white}
+                        buttonText='Show Answer'
+                        onPress={this.toogleQuestionAnswer}
+                    />
+                    <Card 
+                        text={questions[currentQuestionIndex].answer}
+                        backgroundColor={blue} 
+                        buttonTextColor={white}
+                        buttonText='Back to Question'
+                        onPress={this.toogleQuestionAnswer}
+                    />
+                </CardFlip>
+                <View style={[styles.buttonContainer]}>
                     <RoundedButton 
                         disabled={isShowingQuestion}
                         style={[styles.button, {backgroundColor: green}]} 
@@ -91,8 +107,12 @@ const styles = StyleSheet.create({
         flex: 1,
         margin: 16
     },
+    cardContainer:{
+        flex:3,
+        justifyContent: 'center',
+    },
     cardsCounter: {
-        fontSize: 16,
+        fontSize: 18,
         marginBottom: 16
     },
     questionStyle: {

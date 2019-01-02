@@ -2,10 +2,10 @@ import React from 'react'
 import { TouchableOpacity, Text, StyleSheet } from 'react-native'
 import { red } from '../utils/colors';
 
-export default function TextButton({text, onPress, style = {}}) {
+export default function TextButton({text, onPress, buttonTextColor = red, style = {}}) {
     return (
         <TouchableOpacity onPress={onPress}>
-             <Text style={[styles.textStyle, style]}>{text}</Text>
+             <Text style={[styles.textStyle, {color: buttonTextColor}, style]}>{text}</Text>
         </TouchableOpacity>
     )
 }
@@ -13,6 +13,6 @@ export default function TextButton({text, onPress, style = {}}) {
 const styles = StyleSheet.create({
     textStyle: {
       textAlign: 'center',
-      color: red,
+      fontSize: 16
     }
 })

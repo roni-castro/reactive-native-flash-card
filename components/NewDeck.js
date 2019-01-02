@@ -45,6 +45,7 @@ class NewDeck extends React.Component {
             <View style={{margin: 16}}>
                 <BorderedTextInput 
                     title='Title'
+                    maxLength={35}
                     text={title}
                     placeholder='Type the title of the deck'
                     errorMessage={errorMessage}

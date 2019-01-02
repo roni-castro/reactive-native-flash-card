@@ -58,12 +58,18 @@ class AddCard extends React.Component {
             <View style={{margin: 16}}>
                 <BorderedTextInput 
                     title='Question'
+                    multiline={true}
+                    maxHeight={80}
+                    maxLength={200}
                     text={question}
                     placeholder='Type the question'
                     errorMessage={errorMessageQuestion}
                     onChangeText={this.onChangeQuestionInputText} />
                 <BorderedTextInput 
                     title='Answer'
+                    multiline={true}
+                    maxHeight={80}
+                    maxLength={240}
                     text={answer}
                     placeholder='Type the answer'
                     errorMessage={errorMessageAnswer}
