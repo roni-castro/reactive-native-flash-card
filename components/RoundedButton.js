@@ -2,7 +2,7 @@ import React from 'react'
 import { TouchableOpacity, Text, StyleSheet, Platform } from 'react-native'
 import { black, white } from '../utils/colors';
 
-export default function TextButton({text, onPress, style = {}}) {
+export default function RoundedButton({text, onPress, style = {}}) {
     return (
         <TouchableOpacity style={[styles.button, style]} onPress={onPress}>
              <Text style={styles.text}>{text}</Text>

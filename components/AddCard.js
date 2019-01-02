@@ -1,6 +1,6 @@
 import React from 'react'
 import BorderedTextInput from './BorderedTextInput';
-import TextButton from './TextButton';
+import RoundedButton from './RoundedButton';
 import { View } from 'react-native';
 import { addCardToDeck } from '../actions/decks'
 import { connect } from 'react-redux'
@@ -68,7 +68,7 @@ class AddCard extends React.Component {
                     placeholder='Type the answear'
                     errorMessage={errorMessageAnswear}
                     onChangeText={this.onChangeAnswearInputText} />
-                 <TextButton 
+                 <RoundedButton 
                     style={{marginTop: 20}} 
                     text='SUBMIT' 
                     onPress={this.onSubmit} /> 

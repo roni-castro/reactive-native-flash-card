@@ -1,6 +1,6 @@
 import React from 'react'
 import BorderedTextInput from './BorderedTextInput';
-import TextButton from './TextButton';
+import RoundedButton from './RoundedButton';
 import { View } from 'react-native';
 import { createNewDeck } from '../actions/decks'
 import { connect } from 'react-redux'
@@ -49,7 +49,7 @@ class NewDeck extends React.Component {
                     placeholder='Type the title of the deck'
                     errorMessage={errorMessage}
                     onChangeText={this.onChangeText} />
-                 <TextButton 
+                 <RoundedButton 
                     style={{marginTop: 20}} 
                     text='SUBMIT' 
                     onPress={this.onSubmit} /> 
