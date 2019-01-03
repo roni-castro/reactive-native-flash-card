@@ -69,6 +69,11 @@ export function specificDeckReducer(state = initialDeckState, action) {
                 ...state,
                 error: action.error
             }
+        case ADD_NEW_DECK_SUCCESS: 
+            return {
+                ...state,
+                deck: action.deck,
+            }
         case ADD_CARD_SUCCESS: 
             return {
                 ...state,
