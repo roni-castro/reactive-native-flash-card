@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text, StyleSheet, Platform, ScrollView} from 'react-native'
 import TextButton from './TextButton'
-import { white, red } from '../utils/colors';
+import { white } from '../utils/colors';
 
 export default function Card({text, buttonText, buttonTextColor, backgroundColor, onPress}) {
 

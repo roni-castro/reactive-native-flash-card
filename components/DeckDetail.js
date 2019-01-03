@@ -42,7 +42,7 @@ class DeckDetail extends React.Component {
                 {deck.questions && <Text style={styles.counter}>{deck.questions.length} cards</Text>}
                 <View style={styles.buttonContainer}>
                     <RoundedButton style={styles.button} text='Add Card' onPress={this.addNewCardToDeck} />
-                    <RoundedButton style={styles.button} text='Start Quiz' onPress={this.startQuiz} />
+                    <RoundedButton disabled={!deck.questions || deck.questions.length === 0} style={styles.button} text='Start Quiz' onPress={this.startQuiz} />
                 </View>
             </View>
         )

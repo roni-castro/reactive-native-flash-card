@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, StyleSheet, Platform, Dimensions } from 'react-native'
+import { View, Text, StyleSheet, Platform } from 'react-native'
 import { connect } from 'react-redux'
 import RoundedButton from './RoundedButton'
 import Card from './Card'
@@ -7,15 +7,15 @@ import { green, red, orange, white, blue } from '../utils/colors'
 import FinalScore from './FinalScore';
 import CardFlip from 'react-native-card-flip';
 
+const initialState = {
+    currentQuestionIndex: 0,
+    numberOfCorrectAnswer: 0,
+    finishedGame: false,
+    isShowingQuestion: true,
+}
 class Quiz extends React.Component {
 
-    state = {
-        currentQuestionIndex: 0,
-        numberOfCorrectAnswer: 0,
-        finishedGame: false,
-        isShowingQuestion: true,
-        card: null,
-    }
+    state = initialState
 
     toogleQuestionAnswer = () => {
         this.setState({
@@ -35,6 +35,14 @@ class Quiz extends React.Component {
     OnIncorrectButtonClick = () => {
         this.checkNextCardOrEndGame()
         this.card.flip()
+    }
+
+    onRestartQuizButtonClick = () => {
+        this.setState(initialState)
+    }
+
+    onBackToDeckButtonClick = () => {
+        this.props.goBack()
     }
 
     checkNextCardOrEndGame = () => {
@@ -61,6 +69,8 @@ class Quiz extends React.Component {
                 <FinalScore 
                     numberOfCorrectAnswer={numberOfCorrectAnswer}
                     numberOfCards={questions.length} 
+                    onBackToDeckButtonClick={this.onBackToDeckButtonClick}
+                    onRestartQuizButtonClick={this.onRestartQuizButtonClick}
                 />
             )
         }
@@ -136,8 +146,14 @@ const styles = StyleSheet.create({
 function mapStateTopProps(_, { navigation }) {
     const { questions } = navigation.state.params 
     return {
-        questions
+        questions,
     }
 }
 
-export default connect(mapStateTopProps)(Quiz)
+function mapDispatchToProps(_, { navigation }) {
+    return {
+        goBack: () => navigation.goBack()
+    }
+}
+
+export default connect(mapStateTopProps, mapDispatchToProps)(Quiz)

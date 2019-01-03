@@ -1,6 +1,7 @@
 import React from 'react'
-import { Text, StyleSheet, Animated } from 'react-native'
+import { View, Text, StyleSheet, Animated } from 'react-native'
 import { red, green } from '../utils/colors';
+import RoundedButton from './RoundedButton';
 
 const MINIMUM_RECOMMENDED_SCORE = 50
 
@@ -41,18 +42,31 @@ export default class FinalScore extends React.Component {
 
     render() {
         const { bounceValue, fadeAnim } = this.state
+        const { onRestartQuizButtonClick, onBackToDeckButtonClick } = this.props
         const percentScore = this.calculatePercentageScore()
         return (
             <Animated.View style={[
-                styles.center, 
+                styles.container, 
                 { backgroundColor: percentScore >= MINIMUM_RECOMMENDED_SCORE ? green : red,
                   opacity: fadeAnim
                 },
                 ]}>
-                <Text style={styles.scoreText}>Correct cards: </Text>
-                <Animated.Text style={[styles.finalScore, { transform: [{ scale: bounceValue }] }]}>
-                    {percentScore}%
-                </Animated.Text>
+                <View style={styles.container}>
+                    <Text style={styles.scoreText}>Correct cards: </Text>
+                    <Animated.Text style={[styles.finalScore, { transform: [{ scale: bounceValue }] }]}>
+                        {percentScore}%
+                    </Animated.Text>
+                </View>
+                <View style={styles.buttonContainer}>
+                    <RoundedButton
+                        style={styles.button}
+                        text='Restart Quiz'
+                        onPress={onRestartQuizButtonClick} />
+                    <RoundedButton
+                        style={styles.button}
+                        text='Back to Deck'
+                        onPress={onBackToDeckButtonClick} />
+                </View>
             </Animated.View>
         )
     }
@@ -67,9 +81,19 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 40
     },
-    center: {
+    container: {
         flex: 1,
+        padding: 16,
         justifyContent: 'center',
-        alignItems: 'center',
-    }
+        alignItems: 'stretch',
+    },
+    buttonContainer: {
+        flex: 1,
+        flexDirection: 'column',
+        alignItems: 'stretch',
+        marginTop: 24
+    },
+    button: {
+        margin: 8,
+    },
 })
