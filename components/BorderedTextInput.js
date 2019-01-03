@@ -8,13 +8,17 @@ export default function BorderedTextInput({
     placeholder = '', 
     errorMessage= '', 
     onChangeText = null, 
-    style = {}}
+    maxLength = 2000,
+    style = {},
+    ...props}
 ) {
     return (
         <View>
             <Text style={styles.text}>{title}</Text>
             <View style={styles.textInputContainer}>
                 <TextInput
+                   {...props}
+                    maxLength={maxLength}
                     value={text}
                     style={[styles.textInput, style]}
                     selectionColor={blue}
@@ -28,12 +32,11 @@ export default function BorderedTextInput({
 
 const styles = StyleSheet.create({
     textInputContainer: {
+        padding: 4,
         borderWidth: 1,
         borderRadius: Platform.OS === 'ios' ? 16 : 4,
-        height: 42
     },
     textInput: {
-        height: 40,
         paddingLeft: 15,
         paddingRight: 15
     },

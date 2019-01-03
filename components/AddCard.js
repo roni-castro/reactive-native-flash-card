@@ -1,6 +1,6 @@
 import React from 'react'
 import BorderedTextInput from './BorderedTextInput';
-import TextButton from './TextButton';
+import RoundedButton from './RoundedButton';
 import { View } from 'react-native';
 import { addCardToDeck } from '../actions/decks'
 import { connect } from 'react-redux'
@@ -9,17 +9,17 @@ class AddCard extends React.Component {
 
     state = {
         question: '',
-        answear: '',
+        answer: '',
         errorMessageQuestion: '',
-        errorMessageAnswear: '',
+        errorMessageAnswer: '',
     }
 
     onChangeQuestionInputText = (text) => {
         this.setState({question: text})
     }
 
-    onChangeAnswearInputText = (text) => {
-        this.setState({answear: text})
+    onChangeAnswerInputText = (text) => {
+        this.setState({answer: text})
     }
 
     onSubmit = () => {
@@ -33,19 +33,19 @@ class AddCard extends React.Component {
                 errorMessageQuestion: ''
             })
         }
-        if(this.state.answear === '') {
+        if(this.state.answer === '') {
             this.setState({
-                errorMessageAnswear: 'Field cannot be empty'
+                errorMessageAnswer: 'Field cannot be empty'
             })
             return
         } else {
             this.setState({
-                errorMessageAnswear: ''
+                errorMessageAnswer: ''
             })
         }
         const card = {
             question: this.state.question,
-            answear: this.state.answear 
+            answer: this.state.answer 
         }
         const { addCardToDeck, deckId, goBack } = this.props
         addCardToDeck(card, deckId)
@@ -53,22 +53,28 @@ class AddCard extends React.Component {
     }
 
     render() {
-        const { errorMessageAnswear, errorMessageQuestion, question, answear } = this.state
+        const { errorMessageAnswer: errorMessageAnswer, errorMessageQuestion, question, answer: answer } = this.state
         return (
             <View style={{margin: 16}}>
                 <BorderedTextInput 
                     title='Question'
+                    multiline={true}
+                    maxHeight={80}
+                    maxLength={200}
                     text={question}
                     placeholder='Type the question'
                     errorMessage={errorMessageQuestion}
                     onChangeText={this.onChangeQuestionInputText} />
                 <BorderedTextInput 
-                    title='Answear'
-                    text={answear}
-                    placeholder='Type the answear'
-                    errorMessage={errorMessageAnswear}
-                    onChangeText={this.onChangeAnswearInputText} />
-                 <TextButton 
+                    title='Answer'
+                    multiline={true}
+                    maxHeight={80}
+                    maxLength={240}
+                    text={answer}
+                    placeholder='Type the answer'
+                    errorMessage={errorMessageAnswer}
+                    onChangeText={this.onChangeAnswerInputText} />
+                 <RoundedButton 
                     style={{marginTop: 20}} 
                     text='SUBMIT' 
                     onPress={this.onSubmit} /> 

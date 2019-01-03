@@ -1,5 +1,5 @@
 import React from 'react'
-import TextButton from './TextButton'
+import RoundedButton from './RoundedButton'
 import { View, Text, StyleSheet } from 'react-native'
 import { connect } from 'react-redux';
 import { red } from '../utils/colors';
@@ -19,7 +19,11 @@ class DeckDetail extends React.Component {
     }
 
     startQuiz = () => {
-        
+        const { deck, navigation } = this.props
+        navigation.navigate(
+            'Quiz',
+            { questions: deck.questions }
+        )
     }
 
     addNewCardToDeck = () => {
@@ -37,8 +41,8 @@ class DeckDetail extends React.Component {
                 <Text style={styles.title}>{deck.title}</Text> 
                 {deck.questions && <Text style={styles.counter}>{deck.questions.length} cards</Text>}
                 <View style={styles.buttonContainer}>
-                    <TextButton style={styles.button} text='Add Card' onPress={this.addNewCardToDeck} />
-                    <TextButton style={styles.button} text='Start Quiz' onPress={this.startQuiz} />
+                    <RoundedButton style={styles.button} text='Add Card' onPress={this.addNewCardToDeck} />
+                    <RoundedButton disabled={!deck.questions || deck.questions.length === 0} style={styles.button} text='Start Quiz' onPress={this.startQuiz} />
                 </View>
             </View>
         )

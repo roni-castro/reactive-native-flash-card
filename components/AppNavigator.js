@@ -2,6 +2,7 @@ import { black, white } from "../utils/colors";
 import DeckDetail from './DeckDetail';
 import Tabs from './Tabs';
 import AddCard from './AddCard';
+import Quiz from './Quiz';
 import { 
     createStackNavigator,
     createAppContainer 
@@ -27,6 +28,16 @@ const AppNavigator = createStackNavigator({
       screen: AddCard,
       navigationOptions: {
         title: 'Add Card',
+        headerTintColor: white,
+        headerStyle: {
+          backgroundColor: black
+        }
+      }
+    },
+    Quiz: {
+      screen: Quiz,
+      navigationOptions: {
+        title: 'Quiz',
         headerTintColor: white,
         headerStyle: {
           backgroundColor: black
