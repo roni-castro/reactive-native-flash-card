@@ -13,7 +13,7 @@ export async function createNewDeckAPI(newDeck) {
 export async function fetchDecksAPI() {
     const decksStr = await AsyncStorage.getItem(FLASH_DECK)
     const decks = JSON.parse(decksStr)
-    return decks
+    return decks || []
 }
 
 export async function fetchDeckByIdAPI(deckId) {
