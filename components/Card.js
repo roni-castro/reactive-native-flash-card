@@ -10,7 +10,7 @@ export default function Card({ card }) {
                 {card.question}
             </Text>
             <Text style={styles.answer}>
-                {card.answer}
+                {card.answer.replace(/./g, '*')}
             </Text>
         </View>
     )

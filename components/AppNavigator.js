@@ -27,7 +27,6 @@ const AppNavigator = createStackNavigator({
     AddCard: {
       screen: AddCard,
       navigationOptions: {
-        title: 'Add Card',
         headerTintColor: white,
         headerStyle: {
           backgroundColor: black
