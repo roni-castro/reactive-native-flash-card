@@ -23,7 +23,7 @@ class Decks extends React.Component {
         this.props.deleteDeck(deckId)
     }
 
-    onCellLongPressed = (deckId) => {
+    onCardLongPressed = (deckId) => {
         Alert.alert(
             'Delete deck',
             'Are you sure to delete this deck',
@@ -38,7 +38,7 @@ class Decks extends React.Component {
     renderItem = ({ item }) => {
         return (
             <TouchableOpacity
-                onLongPress={() => this.onCellLongPressed(item.id)}
+                onLongPress={() => this.onCardLongPressed(item.id)}
                 onPress={() => this.props.navigation.navigate(
                     'DeckDetail',
                     { deck: item }
