@@ -1,35 +1,41 @@
 import React from 'react'
-import { View, Text, StyleSheet, Platform } from 'react-native'
-import { white, red } from '../utils/colors';
+import { View, Text, StyleSheet, Platform, ScrollView} from 'react-native'
+import TextButton from './TextButton'
+import { white } from '../utils/colors';
 
-export default function Card({ card }) {
+export default function Card({text, buttonText, buttonTextColor, backgroundColor, onPress}) {
 
     return (
-        <View style={[styles.container]}>
-            <Text style={styles.question}>
-                {card.question}
-            </Text>
-            <Text style={styles.answer}>
-                {card.answer}
-            </Text>
+        <View style={[styles.container, {backgroundColor}]}>
+            <ScrollView contentContainerStyle={{flexGrow: 1}}>
+                <View style={styles.titleContainer}>
+                    <Text style={styles.title}>
+                        {text}
+                    </Text>
+                </View>
+            </ScrollView>
+            <TextButton 
+                buttonTextColor={buttonTextColor}
+                text={buttonText}
+                style={styles.center}
+                onPress={onPress} 
+            />
         </View>
     )
 }
 
 const styles = StyleSheet.create({
-    question: {
-        color: red,
-        fontSize: 20,
+    titleContainer: {
+        flex: 1,
+        justifyContent: 'center',
     },
-    answer: {
-        marginTop: 12,
+    title: {
         fontSize: 20,
+        textAlign: 'center'
     },
     container: {
         flex: 1,
         padding: 10,
-        marginTop: 4,
-        marginBottom: 4,
         backgroundColor: white,
         borderWidth: 1,
         borderRadius: Platform.OS === 'ios' ? 16 : 4,

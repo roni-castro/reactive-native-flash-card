@@ -1,38 +1,21 @@
 import React from 'react'
 import RoundedButton from './RoundedButton'
-import { View, Text, FlatList, TouchableOpacity, ScrollView, Alert, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import { connect } from 'react-redux';
 import { red } from '../utils/colors';
-import { getDeckById, deleteCard } from '../actions/decks'
-import Card from './Card'
+import { getDeckById } from '../actions/decks'
 
 class DeckDetail extends React.Component {
     
     static navigationOptions = ({navigation}) => {
         const { deck } = navigation.state.params 
         return {
-            title: `Deck: ${deck.title}`
+            title: deck.title
         }
     }
 
     componentDidMount() {
         this.props.getDeck(this.props.deckId)
-    }
-
-    onCardLongPressed = (card) => {
-        Alert.alert(
-            'Delete card',
-            'Are you sure to delete this card',
-            [
-                { text: 'Cancel'},
-                { text: 'Yes', onPress: () => this.deleteConfirmed(card) },
-            ],
-            { cancelable: true }
-        )
-    }
-
-    deleteConfirmed = (card) => {
-        this.props.deleteCard(card)
     }
 
     startQuiz = () => {
@@ -51,36 +34,17 @@ class DeckDetail extends React.Component {
         )
     }
 
-    renderItem = ({ item }) => {
-        return (
-            <TouchableOpacity
-                onLongPress={() => this.onCardLongPressed(item)}
-                onPress={() => this.props.navigation.navigate(
-                    'AddCard',
-                    {card: item}
-                )}>
-                <Card card={item} />
-            </TouchableOpacity>
-        )
-    }
-
     render() {
         const { deck } = this.props
         return (
-            <ScrollView>
+            <View style={styles.container}>
+                <Text style={styles.title}>{deck.title}</Text> 
+                {deck.questions && <Text style={styles.counter}>{deck.questions.length} cards</Text>}
                 <View style={styles.buttonContainer}>
                     <RoundedButton style={styles.button} text='Add Card' onPress={this.addNewCardToDeck} />
                     <RoundedButton disabled={!deck.questions || deck.questions.length === 0} style={styles.button} text='Start Quiz' onPress={this.startQuiz} />
                 </View>
-                <View style={styles.container}>
-                    {deck.questions && <Text style={styles.counter}>{deck.questions.length} cards</Text>}
-                    {deck.questions && <FlatList
-                        data={deck.questions}
-                        renderItem={this.renderItem}
-                        keyExtractor={(item, index) => index.toString()}
-                    />}
-                </View>
-            </ScrollView>
+            </View>
         )
     }
 }
@@ -123,8 +87,7 @@ function mapStateToProps({specificDeckReducer}, { navigation }) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        getDeck: (deckId) => dispatch(getDeckById(deckId)),
-        deleteCard: (card) => dispatch(deleteCard(card))
+        getDeck: (deckId) => dispatch(getDeckById(deckId))
     }
 }
 

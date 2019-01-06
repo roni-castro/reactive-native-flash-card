@@ -35,36 +35,9 @@ export async function addCardToDeckAPI(card, deckId) {
     return fetchDeckByIdAPI(deckId)
 }
 
-export async function editCardToDeckAPI(cardToBeEdited) {
-    let decks = await fetchDecksAPI()
-    const updatedDeck = decks.map(deck => {
-        if(deck && deck.id === cardToBeEdited.deckId) {
-            deck.questions = deck.questions.map((card) => card.id === cardToBeEdited.id ? cardToBeEdited : card )
-            return deck
-        }
-        return deck
-    })
-    await AsyncStorage.setItem(FLASH_DECK, JSON.stringify(updatedDeck))
-    return fetchDeckByIdAPI(cardToBeEdited.deckId)
-}
-
 export async function deleteDeckByIdAPI(deckId) {
     let decks = await fetchDecksAPI()
     const updatedDeck = decks.filter((deck) => deck.id !== deckId)
     await AsyncStorage.setItem(FLASH_DECK, JSON.stringify(updatedDeck))
     return deckId
 }
-
-export async function deleteCardAPI(cardToBeDeleted) {
-    let decks = await fetchDecksAPI()
-    const updatedDeck = decks.map(deck => {
-        if(deck && deck.id === cardToBeDeleted.deckId) {
-            deck.questions = deck.questions.filter((card) => card.id !== cardToBeDeleted.id)
-            return deck
-        }
-        return deck
-    })
-    await AsyncStorage.setItem(FLASH_DECK, JSON.stringify(updatedDeck))
-    return fetchDeckByIdAPI(cardToBeDeleted.deckId)
-}
-    

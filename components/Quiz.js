@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Text, StyleSheet, Platform } from 'react-native'
 import { connect } from 'react-redux'
 import RoundedButton from './RoundedButton'
-import CardQuestionAnswer from './CardQuestionAnswer'
+import Card from './Card'
 import { green, red, orange, white, blue } from '../utils/colors'
 import FinalScore from './FinalScore';
 import CardFlip from 'react-native-card-flip';
@@ -78,14 +78,14 @@ class Quiz extends React.Component {
             <View style={styles.container}>
                 <Text style={styles.cardsCounter}>{currentQuestionIndex + 1}/{questions.length}</Text>
                 <CardFlip style={[styles.cardContainer]} ref={(card) => this.card = card}>
-                    <CardQuestionAnswer 
+                    <Card 
                         text={questions[currentQuestionIndex].question} 
                         backgroundColor={orange}
                         buttonTextColor={white}
                         buttonText='Show Answer'
                         onPress={this.toogleQuestionAnswer}
                     />
-                    <CardQuestionAnswer 
+                    <Card 
                         text={questions[currentQuestionIndex].answer}
                         backgroundColor={blue} 
                         buttonTextColor={white}

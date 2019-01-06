@@ -2,28 +2,16 @@ import React from 'react'
 import BorderedTextInput from './BorderedTextInput';
 import RoundedButton from './RoundedButton';
 import { View } from 'react-native';
-import { addCardToDeck, editCard } from '../actions/decks'
+import { addCardToDeck } from '../actions/decks'
 import { connect } from 'react-redux'
 
 class AddCard extends React.Component {
 
     state = {
-        isEditing: false,
         question: '',
         answer: '',
         errorMessageQuestion: '',
         errorMessageAnswer: '',
-    }
-
-    componentDidMount() {
-        const { card } = this.props
-        if(card) {
-            this.setState({
-                isEditing: true,
-                question: card.question,
-                answer: card.answer,
-            })
-        }
     }
 
     onChangeQuestionInputText = (text) => {
@@ -55,25 +43,13 @@ class AddCard extends React.Component {
                 errorMessageAnswer: ''
             })
         }
-
-        if(this.state.isEditing) {
-            const { editCard, card } = this.props
-            const cardToBeEdited = {
-                ...card,
-                question: this.state.question,
-                answer: this.state.answer 
-            }
-            editCard(cardToBeEdited)
-        } else {
-            const { addCardToDeck, deckId } = this.props
-            const card = {
-                deckId,
-                question: this.state.question,
-                answer: this.state.answer 
-            }
-            addCardToDeck(card, deckId)
+        const card = {
+            question: this.state.question,
+            answer: this.state.answer 
         }
-        this.props.goBack();
+        const { addCardToDeck, deckId, goBack } = this.props
+        addCardToDeck(card, deckId)
+        goBack();
     }
 
     render() {
@@ -108,17 +84,15 @@ class AddCard extends React.Component {
 }
 
 function mapStateToProps({}, { navigation }) {
-    const { deckId, card } = navigation.state.params
+    const { deckId } = navigation.state.params
     return {
         deckId,  
-        card,
     }
 }
 
 function mapDispatchToProps(dispatch, { navigation }) {
     return {
         addCardToDeck: (card, deckId) => dispatch(addCardToDeck(card, deckId)),
-        editCard: (card) =>  dispatch(editCard(card)),
         goBack: () => navigation.goBack()
     }
 }
