@@ -8,8 +8,14 @@ import { createStore } from 'redux'
 import { applyMiddleware }  from 'redux';
 import thunk from 'redux-thunk';
 import reducers from './reducers/index'
+import { setLocalNotification } from './utils/notification'
 
 export default class App extends React.Component {
+
+  componentDidMount() {
+    setLocalNotification()
+  }
+
   render() {
     const store = createStore(reducers, applyMiddleware(thunk));
     return (

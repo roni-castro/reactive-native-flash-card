@@ -2,6 +2,7 @@ import React from 'react'
 import { View, Text, StyleSheet, Animated } from 'react-native'
 import { red, green } from '../utils/colors';
 import RoundedButton from './RoundedButton';
+import { setLocalNotification, clearLocalNotification } from '../utils/notification'
 
 const MINIMUM_RECOMMENDED_SCORE = 50
 
@@ -15,6 +16,8 @@ export default class FinalScore extends React.Component {
     componentDidMount() {
        this.createBouceAnimation()
        this.crateBackgroundColorAnimation()
+       clearLocalNotification()
+        .then(setLocalNotification)
     }
 
     crateBackgroundColorAnimation = () => {
