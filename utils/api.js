@@ -34,3 +34,10 @@ export async function addCardToDeckAPI(card, deckId) {
     await AsyncStorage.setItem(FLASH_DECK, JSON.stringify(updatedDeck))
     return fetchDeckByIdAPI(deckId)
 }
+
+export async function deleteDeckByIdAPI(deckId) {
+    let decks = await fetchDecksAPI()
+    const updatedDeck = decks.filter((deck) => deck.id !== deckId)
+    await AsyncStorage.setItem(FLASH_DECK, JSON.stringify(updatedDeck))
+    return deckId
+}
