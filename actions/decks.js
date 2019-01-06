@@ -8,6 +8,8 @@ import {
     GET_SPECIFIC_DECK_FAILURE,
     ADD_CARD_SUCCESS,
     ADD_CARD_FAILURE,
+    DELETE_DECK_SUCCESS,
+    DELETE_DECK_FAILURE,
 } from '../actions/index'
 import { v4 as uuid } from 'uuid';
 
@@ -15,7 +17,8 @@ import {
     createNewDeckAPI, 
     fetchDecksAPI, 
     fetchDeckByIdAPI,
-    addCardToDeckAPI
+    addCardToDeckAPI,
+    deleteDeckByIdAPI
 } from '../utils/api';
 
 export function createNewDeck(deck) {
@@ -60,6 +63,23 @@ const onFetchDecksError = (error) => ({
     error
 })
 
+export function deleteDeck(deckId) {
+    return (dispatch) => {
+        deleteDeckByIdAPI(deckId)
+        .then(deckIdRemoved => dispatch(onDeleteDeckSuccess(deckIdRemoved)))
+        .catch(err => dispatch(onDeleteDeckError(err)))
+    }
+}
+
+const onDeleteDeckSuccess = (deckId) => ({
+    type: DELETE_DECK_SUCCESS,
+    deckId
+})
+
+const onDeleteDeckError = (error) => ({
+    type: DELETE_DECK_FAILURE,
+    error
+})
 
 export function getDeckById(deckId) {
     return (dispatch) => {

@@ -13,6 +13,8 @@ import {
     GET_SPECIFIC_DECK_FAILURE,
     ADD_CARD_SUCCESS,
     ADD_CARD_FAILURE,
+    DELETE_DECK_SUCCESS,
+    DELETE_DECK_FAILURE,
 } from '../actions/index'
 
 export function decksReducer(state = initialState, action) {
@@ -33,6 +35,16 @@ export function decksReducer(state = initialState, action) {
                 decks: [...state.decks, action.deck],
             }
         case ADD_NEW_DECK_FAILURE:
+            return {
+                ...state,
+                error: action.error
+            }
+        case DELETE_DECK_SUCCESS: 
+            return {
+                ...state,
+                decks: state.decks.filter((deck) => deck.id !== action.deckId),
+            }
+        case DELETE_DECK_FAILURE:
             return {
                 ...state,
                 error: action.error
@@ -80,6 +92,16 @@ export function specificDeckReducer(state = initialDeckState, action) {
                 deck: action.deck
             }
         case ADD_CARD_FAILURE:
+            return {
+                ...state,
+                error: action.error
+            }
+        case DELETE_DECK_SUCCESS: 
+            return {
+                ...state,
+                deck: {},
+            }
+        case DELETE_DECK_FAILURE:
             return {
                 ...state,
                 error: action.error

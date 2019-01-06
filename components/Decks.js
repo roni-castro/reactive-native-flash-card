@@ -1,21 +1,46 @@
 import React from 'react'
-import { FlatList, View, TouchableOpacity } from 'react-native';
+import { FlatList, View, TouchableOpacity, Alert, } from 'react-native';
 import { connect } from 'react-redux'
 import Deck from './Deck'
-import { getDecks } from '../actions/decks'
+import { getDecks, deleteDeck } from '../actions/decks'
 import { lightGray } from '../utils/colors';
 
 class Decks extends React.Component {
+
+    state = {
+        modalVisible: false,
+    }
 
     componentDidMount() {
         this.props.getDecks()
     }
 
-    renderItem = ({item}) => {
+    setModalVisible(visible) {
+        this.setState({ modalVisible: visible });
+    }
+
+    deleteConfirmed = (deckId) => {
+        this.props.deleteDeck(deckId)
+    }
+
+    onCellLongPressed = (deckId) => {
+        Alert.alert(
+            'Delete deck',
+            'Are you sure to delete this deck',
+            [
+                { text: 'Cancel'},
+                { text: 'Yes', onPress: () => this.deleteConfirmed(deckId) },
+            ],
+            { cancelable: true }
+        )
+    }
+
+    renderItem = ({ item }) => {
         return (
-            <TouchableOpacity 
+            <TouchableOpacity
+                onLongPress={() => this.onCellLongPressed(item.id)}
                 onPress={() => this.props.navigation.navigate(
-                    'DeckDetail', 
+                    'DeckDetail',
                     { deck: item }
                 )}>
                 <Deck deck={item} />
@@ -26,8 +51,8 @@ class Decks extends React.Component {
     render() {
         const { decks } = this.props
         return (
-            <View style={{flex: 1, backgroundColor: lightGray}}>
-                {decks && <FlatList 
+            <View style={{ flex: 1, backgroundColor: lightGray }}>
+                {decks && <FlatList
                     data={decks}
                     renderItem={this.renderItem}
                     keyExtractor={(item, index) => index.toString()}
@@ -37,7 +62,7 @@ class Decks extends React.Component {
     }
 }
 
-function mapStateToProps({decksReducer}) {
+function mapStateToProps({ decksReducer }) {
     return {
         decks: decksReducer.decks
     }
@@ -45,7 +70,8 @@ function mapStateToProps({decksReducer}) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        getDecks: () => dispatch(getDecks())
+        getDecks: () => dispatch(getDecks()),
+        deleteDeck: (deckId) => dispatch(deleteDeck(deckId))
     }
 }
 
