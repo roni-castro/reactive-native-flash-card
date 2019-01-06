@@ -7,6 +7,11 @@ import { connect } from 'react-redux'
 
 class AddCard extends React.Component {
 
+    static navigationOptions = ({ navigation }) => {
+        const { params } = navigation.state;
+        return params;
+    };
+
     state = {
         isEditing: false,
         question: '',
@@ -18,11 +23,15 @@ class AddCard extends React.Component {
     componentDidMount() {
         const { card } = this.props
         if(card) {
+            console.log(this.props.navigation)
+            this.props.navigation.setParams({ title: 'Edit Card' })
             this.setState({
                 isEditing: true,
                 question: card.question,
                 answer: card.answer,
             })
+        } else {
+            this.props.navigation.setParams({ title: 'Add Card' })
         }
     }
 
