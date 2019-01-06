@@ -8,8 +8,12 @@ import {
     GET_SPECIFIC_DECK_FAILURE,
     ADD_CARD_SUCCESS,
     ADD_CARD_FAILURE,
+    EDIT_CARD_SUCCESS,
+    EDIT_CARD_FAILURE,
     DELETE_DECK_SUCCESS,
     DELETE_DECK_FAILURE,
+    DELETE_CARD_SUCCESS,
+    DELETE_CARD_FAILURE,
 } from '../actions/index'
 import { v4 as uuid } from 'uuid';
 
@@ -18,7 +22,9 @@ import {
     fetchDecksAPI, 
     fetchDeckByIdAPI,
     addCardToDeckAPI,
-    deleteDeckByIdAPI
+    editCardToDeckAPI,
+    deleteDeckByIdAPI,
+    deleteCardAPI
 } from '../utils/api';
 
 export function createNewDeck(deck) {
@@ -81,6 +87,24 @@ const onDeleteDeckError = (error) => ({
     error
 })
 
+export function deleteCard(card) {
+    return (dispatch) => {
+        deleteCardAPI(card)
+        .then(deck => dispatch(onDeleteCardSuccess(deck)))
+        .catch(err => dispatch(onDeleteCardError(err)))
+    }
+}
+
+const onDeleteCardSuccess = (deck) => ({
+    type: DELETE_CARD_SUCCESS,
+    deck
+})
+
+const onDeleteCardError = (error) => ({
+    type: DELETE_CARD_FAILURE,
+    error
+})
+
 export function getDeckById(deckId) {
     return (dispatch) => {
         fetchDeckByIdAPI(deckId)
@@ -100,8 +124,14 @@ const onFetchDeckError = (error) => ({
 })
 
 export function addCardToDeck(card, deckId) {
+    const newCard = {
+        ...card,
+        deckId,
+        id: uuid()
+    }
+
     return (dispatch) => {
-        addCardToDeckAPI(card, deckId)
+        addCardToDeckAPI(newCard, deckId)
         .then((deck) => dispatch(onAddCardDeckSuccess(deck)))
         .catch((err) => dispatch(onAddCardDeckError(err)))
     }
@@ -114,5 +144,23 @@ const onAddCardDeckSuccess = (deck) => ({
 
 const onAddCardDeckError = (error) => ({
     type: ADD_CARD_FAILURE,
+    error
+})
+
+export function editCard(card) {
+    return (dispatch) => {
+        editCardToDeckAPI(card)
+        .then((deck) => dispatch(onEditCardDeckSuccess(deck)))
+        .catch((err) => dispatch(onEditCardDeckError(err)))
+    }
+}
+
+const onEditCardDeckSuccess = (deck) => ({
+    type: EDIT_CARD_SUCCESS,
+    deck
+})
+
+const onEditCardDeckError = (error) => ({
+    type: EDIT_CARD_FAILURE,
     error
 })
