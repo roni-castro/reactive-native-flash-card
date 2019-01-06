@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { red } from '../utils/colors';
 import { getDeckById, deleteCard } from '../actions/decks'
 import Card from './Card'
+import EmptyState from './EmptyState';
 
 class DeckDetail extends React.Component {
     
@@ -74,11 +75,17 @@ class DeckDetail extends React.Component {
                 </View>
                 <View style={styles.container}>
                     {deck.questions && <Text style={styles.counter}>{deck.questions.length} cards</Text>}
-                    {deck.questions && <FlatList
+                    {deck.questions && deck.questions.length > 0 && <FlatList
                         data={deck.questions}
                         renderItem={this.renderItem}
                         keyExtractor={(item, index) => index.toString()}
                     />}
+                    {deck.questions && deck.questions.length === 0 && 
+                        <EmptyState 
+                            title='You have no card in this deck'
+                            message='Click on Add card'
+                        />
+                    }
                 </View>
             </ScrollView>
         )

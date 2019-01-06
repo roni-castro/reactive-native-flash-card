@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import Deck from './Deck'
 import { getDecks, deleteDeck } from '../actions/decks'
 import { lightGray } from '../utils/colors';
+import EmptyState from './EmptyState';
 
 class Decks extends React.Component {
 
@@ -50,6 +51,12 @@ class Decks extends React.Component {
 
     render() {
         const { decks } = this.props
+        if(decks.length === 0) {
+            return <EmptyState 
+                title='Your deck list is empty'
+                message='Add a new deck'
+            />
+        }
         return (
             <View style={{ flex: 1, backgroundColor: lightGray }}>
                 {decks && <FlatList
