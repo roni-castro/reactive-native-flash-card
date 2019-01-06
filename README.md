@@ -4,8 +4,7 @@
     - `npm start`
     - Run the app on Android or iOS device/emulator
     
-    
-   * Features:
+ 
  ## Screenshots Android
  <img src="https://i.imgur.com/gVQsiPQ.png" width="25%" height="25%"/> <img src="https://i.imgur.com/vKx8l07.png" width="25%" height="25%"/> <img src="https://i.imgur.com/2EDiMmG.png" width="25%" height="25%"/> 
  <img src="https://i.imgur.com/keudYd9.png" width="25%" height="25%"/> <img src="https://i.imgur.com/Lw7uccv.png" width="25%" height="25%"/> <img src="https://i.imgur.com/9eHsDuL.png" width="25%" height="25%"/> <img src="https://i.imgur.com/Flnjhj8.png" width="25%" height="25%"/> <img src="https://i.imgur.com/Fl0iizG.png" width="25%" height="25%"/> <img src="https://i.imgur.com/nfkv9jp.png" width="25%" height="25%"/> <img src="https://i.imgur.com/P5LQPyS.png" width="25%" height="25%"/> 
